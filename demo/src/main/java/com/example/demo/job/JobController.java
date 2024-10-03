@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpRequest;
 import java.util.List;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/jobs")
@@ -37,15 +41,12 @@ public ResponseEntity<Job> getJobById(@PathVariable Long id) {
     if (job != null) {
         return new ResponseEntity<> (job, HttpStatus.CREATED );
     }
-//    for id where id is not mentioned
-//    return new Job(1L, "TestJob", "TestJob", "2000", "3000", "loc");
 
-//    for status
 
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 }
 
-    @DeleteMapping("/jobs/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity <String> deleteJob(@PathVariable Long id){
         boolean deleted = jobService.deleteById(id);
         if (deleted)
@@ -54,9 +55,10 @@ public ResponseEntity<Job> getJobById(@PathVariable Long id) {
 
     }
 
+    @PutMapping("/{id}")
 //    @PutMapping("/jobs/{id}")
     //Use this method for all URL
-    @RequestMapping(value = "/jobs/{id}",  method = RequestMethod.PUT)  // I can use this method for post,get,delete etc.
+    // @RequestMapping(value = "/jobs/{id}",  method = RequestMethod.PUT)  // I can use this method for post,get,delete etc.
     public ResponseEntity <String> updateJob(@PathVariable Long id,
                                              @RequestBody Job updatedJob){
         boolean updated = jobService.updateJob(id, updatedJob);
